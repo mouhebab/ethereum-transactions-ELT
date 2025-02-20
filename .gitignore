@@ -1,0 +1,3 @@
+venv_tx_etl/
+__pycache__/
+.env
