@@ -1,0 +1,9 @@
+Mongo:
+  Mongo_Config:
+    host_url: "mongodb://localhost:27017/"
+    db_name: "pairs_detection"
+  Mongo_Collections:
+    transactions_routes_raw: 
+      collection_name: "uniswap_router_transactions_raw"
+      primary_key: ['tx_hash']
+
