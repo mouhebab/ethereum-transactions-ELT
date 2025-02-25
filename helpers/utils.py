@@ -39,3 +39,16 @@ def load_json(file_path: str) -> dict:
     except Exception as e:
         print(f"[load_json] Error loading JSON file: {e}")
         return {}
+    
+def stringify_large_ints(obj, path_prefix=""):
+    if isinstance(obj, dict):
+        return {
+            k: str(v) if isinstance(v, int) and abs(v) > 2**63 - 1 else stringify_large_ints(v, f"{path_prefix}.{k}" if path_prefix else k)
+            for k, v in obj.items()
+        }
+    elif isinstance(obj, list):
+        return [stringify_large_ints(i, path_prefix) for i in obj]
+    return obj
+
+def prepare_for_mongo(data):
+    return [stringify_large_ints(doc) for doc in data]

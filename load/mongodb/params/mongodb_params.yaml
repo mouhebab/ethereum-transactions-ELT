@@ -6,4 +6,7 @@ Mongo:
     transactions_routes_raw: 
       collection_name: "uniswap_router_transactions_raw"
       primary_key: ['tx_hash']
+    transactions_routes_decoded: 
+      collection_name: "uniswap_router_transactions_decoded"
+      primary_key: []
 
