@@ -1,6 +1,7 @@
 from extract.extract_swaps import main as extract_main
 from load.mongodb.mongodb import load_to_mongo,load_from_mongo
 from transform.decode_input_data import decode_input_data_main
+from transform.process_decoded_input_data import process_decoded_input_main
 from helpers.utils import prepare_for_mongo
 import logging
 
@@ -31,7 +32,11 @@ def main():
         raw_data = load_from_mongo(collection_key=RAW_DATA_COLLECTION_KEY)
         logging.info("Start Decoding")
         decoded_data = decode_input_data_main(raw_data)
-        load_to_mongo(prepare_for_mongo(decoded_data), DECODED_DATA_COLLECTION_KEY)
+        decoded_data_processed = process_decoded_input_main(decoded_data)
+        logging.info("Decoding & processing Completed")
+        logging.info("Starting Loading decoded data")
+        load_to_mongo(prepare_for_mongo(decoded_data_processed), DECODED_DATA_COLLECTION_KEY)
+        logging.info("loading Completed")
     except Exception as e:
         logging.exception(f"ETL Pipeline Failed: {e}")
 
